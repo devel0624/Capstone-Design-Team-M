@@ -27,8 +27,8 @@ def hide_window():
     if messagebox.askyesno("Quit", "트레이로 최소화 하시겠습니까?"):
         ws.withdraw()
         image=Image.open("C:/Users/gudrb/Desktop/그리;ㅁ/곰곰.png")
-        menu=(item('종료', quit_window), item('Show', show_window))
-        icon=pystray.Icon("name", image, "Gesture program", menu)
+        menu=(item('종료', quit_window), item('열기', show_window))
+        icon=pystray.Icon("Gesture program", image, "Gesture program", menu)
         icon.run()
     else:
         ws.destroy()
@@ -38,9 +38,6 @@ def nextPage():
     ws.destroy()
     import page2
 
-def prevPage():
-    ws.destroy()
-    import page3
     
 #############################################
 
@@ -63,7 +60,7 @@ cap = cv.VideoCapture(0)
 
 Label(
     ws,
-    text="This is First page",
+    text="VIDEO LABEL",
     padx=20,
     pady=20,
     bg='#5d8a82',
@@ -84,7 +81,7 @@ Button(
     text="다음", 
     font=f,
     command=nextPage
-    ).pack(fill=X, expand=TRUE, side=LEFT)
+    ).pack(fill=X, expand=TRUE, side=RIGHT)
 
 ws.protocol('WM_DELETE_WINDOW', hide_window)
 ws.mainloop()
