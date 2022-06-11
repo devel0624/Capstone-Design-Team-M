@@ -8,7 +8,7 @@ import pyautogui as pag
 import tensorflow as tf
 import time
 
-actions = ['PlayPause', 'Forward', 'Rewind', 'VolUp', 'VolDn', 'Mute']
+actions = ['StartMotion', 'PlayPause', 'Forward', 'Rewind', 'VolUp', 'VolDn', 'Mute']
 seq_length = 30
 
 model = tf.keras.models.load_model('models/Gestures_model.h5')
@@ -28,6 +28,7 @@ action_seq = []
 last_action = None
 last_action2 = None
 last_action3 = None
+Max_time = None
 
 while cap.isOpened():
     ret, img = cap.read()
@@ -87,28 +88,35 @@ while cap.isOpened():
             this_action = '?'
             if action_seq[-1] == action_seq[-2] == action_seq[-3]:
                 this_action = action
+                if this_action == 'StartMotion' :
+                    time.sleep(1)
+                    Max_time = time.time() + 30
 
-                if this_action == 'PlayPause':
-                    pag.press('playpause')
-                    time.sleep(2)
-                elif this_action == 'VolUp':
-                    pag.press('volumeup')
-                elif this_action == 'VolDn':
-                    pag.press('volumedown')
-                elif this_action == 'Mute':
-                    pag.press('volumemute')
-                    time.sleep(2)
-                elif this_action == 'Forward':
-                    pag.press('right')
-                elif this_action == 'Rewind':
-                    pag.press('left')
+                if Max_time != None and Max_time > time.time() :
+                    if this_action == 'PlayPause':
+                        pag.press('playpause')
+                        time.sleep(2)
+                    elif this_action == 'VolUp':
+                        pag.press('volumeup')
+                    elif this_action == 'VolDn':
+                        pag.press('volumedown')
+                    elif this_action == 'Mute':
+                        pag.press('volumemute')
+                        time.sleep(2)
+                    elif this_action == 'Forward':
+                        pag.press('right')
+                    elif this_action == 'Rewind':
+                        pag.press('left')
 
-                last_action3 = last_action2
-                last_action2 = last_action
-                last_action = this_action
+                    last_action3 = last_action2
+                    last_action2 = last_action
+                    last_action = this_action
                 
-                if last_action == last_action2 and last_action2 == last_action3 :
-                    time.sleep(0.5)
+                    if last_action == last_action2 and last_action2 == last_action3 :
+                        time.sleep(0.5)
+                
+                elif Max_time != None and Max_time < time.time() :
+                    Max_time = None
 
             cv2.putText(img, f'{this_action.upper()}', org=(int(res.landmark[0].x * img.shape[1]), int(res.landmark[0].y * img.shape[0] + 20)), fontFace=cv2.FONT_HERSHEY_SIMPLEX, fontScale=1, color=(255, 255, 255), thickness=2)
 
