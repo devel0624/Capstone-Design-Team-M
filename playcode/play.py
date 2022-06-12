@@ -90,8 +90,7 @@ while cap.isOpened():
             if action_seq[-1] == action_seq[-2] == action_seq[-3]:
                 this_action = action
                 if this_action == 'StartMotion' and Max_time == None :
-                    Max_time = time.time() + 20
-                    #this_action = None
+                    Max_time = time.time() + 30
 
                 if Max_time != None and Max_time > time.time() :
                     if this_action == 'PlayPause':
