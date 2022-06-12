@@ -29,6 +29,7 @@ last_action = None
 last_action2 = None
 last_action3 = None
 Max_time = None
+re_time = None
 
 while cap.isOpened():
     ret, img = cap.read()
@@ -88,21 +89,21 @@ while cap.isOpened():
             this_action = '?'
             if action_seq[-1] == action_seq[-2] == action_seq[-3]:
                 this_action = action
-                if this_action == 'StartMotion' :
-                    time.sleep(1)
-                    Max_time = time.time() + 30
+                if this_action == 'StartMotion' and Max_time == None :
+                    Max_time = time.time() + 20
+                    #this_action = None
 
                 if Max_time != None and Max_time > time.time() :
                     if this_action == 'PlayPause':
                         pag.press('playpause')
-                        time.sleep(2)
+                        time.sleep(0.5)
                     elif this_action == 'VolUp':
                         pag.press('volumeup')
                     elif this_action == 'VolDn':
                         pag.press('volumedown')
                     elif this_action == 'Mute':
-                        pag.press('volumemute')
-                        time.sleep(2)
+                        pag.press('volumemute') 
+                        time.sleep(0.5)
                     elif this_action == 'Forward':
                         pag.press('right')
                     elif this_action == 'Rewind':
@@ -113,7 +114,7 @@ while cap.isOpened():
                     last_action = this_action
                 
                     if last_action == last_action2 and last_action2 == last_action3 :
-                        time.sleep(0.5)
+                        time.sleep(0.2)
                 
                 elif Max_time != None and Max_time < time.time() :
                     Max_time = None
