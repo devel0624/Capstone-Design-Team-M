@@ -1,0 +1,11 @@
+<!DOCTYPE RCC><RCC version="1.0">
+<qresource>
+<file>Gesture_Image/Recog_Start.png</file>
+<file>Gesture_Image/Play_Pause.png</file>
+<file>Gesture_Image/Forward.png</file>
+<file>Gesture_Image/Rewind.png</file>
+<file>Gesture_Image/Vol_Up.png</file>
+<file>Gesture_Image/Vol_Down.png</file>
+<file>Gesture_Image/Mute.png</file>
+</qresource>
+</RCC>
